@@ -90,16 +90,16 @@ shared_ptr<TargetSensor> Simulation::createTargetSensor(const SimulationParams& 
 }
 
 DartConfiguration executeTactic(string tactic, const DartConfiguration& config,
-		const TacticsParams& tacticsParams, const AdaptationManagerParams& adaptMgrParams) {
+		const TacticsParams& tacticsParams, const AdaptationManagerParams& adaptMgrParams, double randomVal) {
 	auto changeAltitudePeriods =
 			pladapt::tacticLatencyToPeriods(tacticsParams.changeAltitudeLatency,
 					adaptMgrParams.adaptationPeriod);
 
 	
 	
-	double randomVal = (double)rand()/(RAND_MAX + 1)+(rand()%4);
+	// double randomVal = (double)rand()/(RAND_MAX + 1)+(rand()%4);
 	
-	randomVal = randomVal<0? randomVal*-1.0 : randomVal;
+	// randomVal = randomVal<0? randomVal*-1.0 : randomVal;
 	changeAltitudePeriods = randomVal;
 
 	auto newConfig = config;
@@ -146,10 +146,9 @@ DartConfiguration executeTactic(string tactic, const DartConfiguration& config,
 	return newConfig;
 }
 
-
-DartConfiguration getRandomNum(vector<int>randNumbers) {
+double getRandomNum(vector<int>randNumbers) {
 	int randomIndex = rand() % randNumbers.size();
-	return randNumbers[randomIndex];
+	return randNumbers[3];
 }
 
 SimulationResults Simulation::run(const SimulationParams& simParams, const Params& params,
@@ -160,14 +159,14 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 	//random nums file
 	ifstream File;
     File.open("randonum.txt");
-	std::vector<int>randNumbers;
-	int number;
+	std::vector<double>randNumbers;
+	double number;
 	while(File >> number)
 		// cout<<number<<endl;
     	randNumbers.push_back(number);
 	
-	for (vector<int>::const_iterator i = randNumbers.begin(); i != randNumbers.end(); ++i)
-    	cout << *i << ' ';
+	cout<<endl;
+	cout<<getRandomNum(randNumbers)<<endl;
 
 	// random nums file
 	
@@ -308,7 +307,7 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 		 * started, but we cannot wait until they complete.
 		 */
 		for (auto tactic : tactics) {
-			currentConfig = executeTactic(tactic, currentConfig, params.tactics, params.adaptationManager);
+			currentConfig = executeTactic(tactic, currentConfig, params.tactics, params.adaptationManager, getRandomNum(randNumbers));
 		}
 
 		/* update display */
