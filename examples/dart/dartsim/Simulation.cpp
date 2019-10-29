@@ -147,6 +147,10 @@ DartConfiguration executeTactic(string tactic, const DartConfiguration& config,
 }
 
 
+DartConfiguration getRandomNum(vector<int>randNumbers) {
+	int randomIndex = rand() % randNumbers.size();
+	return randNumbers[randomIndex];
+}
 
 SimulationResults Simulation::run(const SimulationParams& simParams, const Params& params,
 		const RealEnvironment& threatEnv, const RealEnvironment& targetEnv,
