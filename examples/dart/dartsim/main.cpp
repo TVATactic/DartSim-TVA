@@ -24,6 +24,7 @@
 #include <cstdlib>
 #include <dartam/RandomSeed.h>
 #include <dartam/DartUtilityFunction.h>
+#include <fstream>
 
 // set this to 1 for testing
 #define FIXED2DSPACE 0
@@ -345,37 +346,56 @@ int main(int argc, char** argv) {
 				<< " threat=" << adaptParams.environmentModel.THREAT_RANGE << endl;
 	}
 
+	int i=0;
+	ofstream resultsFile;
+	resultsFile.open ("resultsMod.csv", std::ofstream::out | std::ofstream::app);
+	resultsFile<<"targetsDetected, destroyed, whereDestroyed.x, missionSuccess, decisionTimeAvg, "
+	  			"decisionTimeVar"<<endl;
 
-	// instantiate adaptation manager
-	shared_ptr<TargetSensor> pTargetSensor = Simulation::createTargetSensor(simParams,
-			adaptParams);
-	shared_ptr<Threat> pThreatSim = Simulation::createThreatSim(simParams, adaptParams);
 
-	/* initialize adaptation manager */
-	DartAdaptationManager adaptMgr;
-	adaptMgr.initialize(adaptParams,
-			unique_ptr<pladapt::UtilityFunction>(
-					new DartUtilityFunction(pThreatSim, pTargetSensor,
-							adaptParams.adaptationManager.finalReward)));
+	while(i<10000){
 
-	if (simParams.optimalityTest && !adaptMgr.supportsStrategy()) {
-		throw std::invalid_argument("selected adaptation manager does not support full strategies");
+		// instantiate adaptation manager
+		shared_ptr<TargetSensor> pTargetSensor = Simulation::createTargetSensor(simParams,
+				adaptParams);
+		shared_ptr<Threat> pThreatSim = Simulation::createThreatSim(simParams, adaptParams);
+
+		/* initialize adaptation manager */
+		DartAdaptationManager adaptMgr;
+		adaptMgr.initialize(adaptParams,
+				unique_ptr<pladapt::UtilityFunction>(
+						new DartUtilityFunction(pThreatSim, pTargetSensor,
+								adaptParams.adaptationManager.finalReward)));
+
+		if (simParams.optimalityTest && !adaptMgr.supportsStrategy()) {
+			throw std::invalid_argument("selected adaptation manager does not support full strategies");
+		}
+
+		auto results = Simulation::run(simParams, adaptParams, threatEnv, targetEnv,
+				route, adaptMgr);
+
+		const std::string RESULTS_PREFIX = "out:";
+		cout << RESULTS_PREFIX << "destroyed=" << results.destroyed << endl;
+		cout << RESULTS_PREFIX << "targetsDetected=" << results.targetsDetected << endl;
+		cout << RESULTS_PREFIX << "missionSuccess=" << results.missionSuccess << endl;
+
+		cout << "csv," << results.targetsDetected << ',' << results.destroyed
+				<< ',' << results.whereDestroyed.x
+				<< ',' << results.missionSuccess
+				<< ',' << results.decisionTimeAvg
+				<< ',' << results.decisionTimeVar
+				<<  endl;
+
+		resultsFile<< results.targetsDetected << ',' << results.destroyed
+				<< ',' << results.whereDestroyed.x
+				<< ',' << results.missionSuccess
+				<< ',' << results.decisionTimeAvg
+				<< ',' << results.decisionTimeVar
+				<<  endl;
+
+		i++;
 	}
-
-	auto results = Simulation::run(simParams, adaptParams, threatEnv, targetEnv,
-			route, adaptMgr);
-
-	const std::string RESULTS_PREFIX = "out:";
-	cout << RESULTS_PREFIX << "destroyed=" << results.destroyed << endl;
-	cout << RESULTS_PREFIX << "targetsDetected=" << results.targetsDetected << endl;
-	cout << RESULTS_PREFIX << "missionSuccess=" << results.missionSuccess << endl;
-
-	cout << "csv," << results.targetsDetected << ',' << results.destroyed
-			<< ',' << results.whereDestroyed.x
-			<< ',' << results.missionSuccess
-			<< ',' << results.decisionTimeAvg
-			<< ',' << results.decisionTimeVar
-			<<  endl;
+	resultsFile.close();
 
 	return 0;
 }

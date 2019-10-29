@@ -94,8 +94,19 @@ DartConfiguration executeTactic(string tactic, const DartConfiguration& config,
 			pladapt::tacticLatencyToPeriods(tacticsParams.changeAltitudeLatency,
 					adaptMgrParams.adaptationPeriod);
 
+	
+	
+	double randomVal = (double)rand()/(RAND_MAX + 1)+(rand()%4);
+	
+	randomVal = randomVal<0? randomVal*-1.0 : randomVal;
+	changeAltitudePeriods = randomVal;
+
 	auto newConfig = config;
 	cout << "executing tactic " << tactic << endl;
+
+	cout<<"Cost now: "<< newConfig.getCostAttribute()<<" deducting"<<endl;
+	newConfig.deductCostAttribute();
+
 	if (tactic == INC_ALTITUDE) {
 		if (changeAltitudePeriods > 0) {
 			newConfig.setTtcIncAlt(changeAltitudePeriods);
