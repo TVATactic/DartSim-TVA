@@ -37,6 +37,7 @@
 #include <boost/accumulators/statistics/stats.hpp>
 #include <boost/accumulators/statistics/mean.hpp>
 #include <boost/accumulators/statistics/moment.hpp>
+#include <fstream>
 
 using namespace std;
 using namespace pladapt;
@@ -152,6 +153,20 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 		const Route& route, DartAdaptationManager& adaptMgr) {
 	SimulationResults results;
 
+	//random nums file
+	ifstream File;
+    File.open("randonum.txt");
+	std::vector<int>randNumbers;
+	int number;
+	while(File >> number)
+		// cout<<number<<endl;
+    	randNumbers.push_back(number);
+	
+	for (vector<int>::const_iterator i = randNumbers.begin(); i != randNumbers.end(); ++i)
+    	cout << *i << ' ';
+
+	// random nums file
+	
 	/*
 	 *  optimal testing stuff
 	 *  This makes a single adaptation decision for the whole route, computing
