@@ -104,8 +104,8 @@ DartConfiguration executeTactic(string tactic, const DartConfiguration& config,
 	auto newConfig = config;
 	cout << "executing tactic " << tactic << endl;
 
-	cout<<"Cost now: "<< newConfig.getCostAttribute()<<" deducting"<<endl;
-	newConfig.deductCostAttribute();
+	// cout<<"Cost now: "<< newConfig.getCostAttribute()<<" deducting"<<endl;
+	// newConfig.deductCostAttribute();
 
 	if (tactic == INC_ALTITUDE) {
 		if (changeAltitudePeriods > 0) {

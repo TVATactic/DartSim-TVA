@@ -353,7 +353,7 @@ int main(int argc, char** argv) {
 	  			"decisionTimeVar"<<endl;
 
 
-	while(i<10000){
+	while(i<1){
 
 		// instantiate adaptation manager
 		shared_ptr<TargetSensor> pTargetSensor = Simulation::createTargetSensor(simParams,
