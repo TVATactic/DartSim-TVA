@@ -146,7 +146,7 @@ DartConfiguration executeTactic(string tactic, const DartConfiguration& config,
 	return newConfig;
 }
 
-double getRandomNum(vector<int>randNumbers) {
+double getRandomNum(vector<double>randNumbers) {
 	int randomIndex = rand() % randNumbers.size();
 	return randNumbers[3];
 }
