@@ -376,8 +376,9 @@ std::vector<std::string> PRISMWrapper::plan(const std::string& environmentModel,
          * Also, if we monitor that the tactic has not finished, even though it should have, we
          * can set the initial state so that it seems that it has one period to go.
          */
-		cout<<"planning"<<endl;
+		cout<<"planning2"<<endl;
         if (generateModel(environmentModel, initialState, modelPath)) {
+			cout<<"generateModel"<<endl;
             if (runPrism(modelPath, adversaryPath, statesPath, labelsPath,
             		pctl.c_str())) {
             	if (boost::filesystem::exists(adversaryPath)) {
