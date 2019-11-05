@@ -348,7 +348,7 @@ std::vector<std::string> PRISMWrapper::plan(const std::string& environmentModel,
 		BOOST_SCOPE_EXIT(&path, &tempDir, &modelPath, &adversaryPath, &statesPath, &labelsPath, &currentDir) {
 	        // restore current dir and remove temp if needed
 			cout<<"temp Directory: "<< tempDir<<endl<<endl;
-			
+
 	        if (path) {
 	            path->assign(tempDir);
 	        } else {
@@ -380,6 +380,8 @@ std::vector<std::string> PRISMWrapper::plan(const std::string& environmentModel,
          */
 		cout<<"planning2"<<endl;
 		cout<<modelPath<<endl<<endl;
+		cout<<"adversaryPath: "<<adversaryPath<<endl<<endl;
+		cout<<" statesPath: "<<statesPath<<endl<<endl;
         if (generateModel(environmentModel, initialState, modelPath)) {
 			cout<<"generateModel"<<endl;
             if (runPrism(modelPath, adversaryPath, statesPath, labelsPath,
