@@ -377,6 +377,7 @@ std::vector<std::string> PRISMWrapper::plan(const std::string& environmentModel,
          * can set the initial state so that it seems that it has one period to go.
          */
 		cout<<"planning2"<<endl;
+		cout<<modelPath<<endl<<endl;
         if (generateModel(environmentModel, initialState, modelPath)) {
 			cout<<"generateModel"<<endl;
             if (runPrism(modelPath, adversaryPath, statesPath, labelsPath,
