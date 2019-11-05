@@ -155,9 +155,9 @@ double getRandomNum(vector<double>randNumbers) {
 // 		const RealEnvironment& threatEnv, const RealEnvironment& targetEnv,
 // 		const Route& route, DartAdaptationManager& adaptMgr) {
 
-	SimulationResults Simulation::run(const SimulationParams& simParams, const Params& params,
-		const RealEnvironment& threatEnv, const RealEnvironment& targetEnv,
-		const Route& route) {
+SimulationResults Simulation::run(const SimulationParams& simParams, const Params& params,
+	const RealEnvironment& threatEnv, const RealEnvironment& targetEnv,
+	const Route& route) {
 
 	SimulationResults results;
 
@@ -165,15 +165,15 @@ double getRandomNum(vector<double>randNumbers) {
 
 	// instantiate adaptation manager
 	shared_ptr<TargetSensor> pTargetSensor = Simulation::createTargetSensor(simParams,
-			adaptParams);
-	shared_ptr<Threat> pThreatSim = Simulation::createThreatSim(simParams, adaptParams);
+			params);
+	shared_ptr<Threat> pThreatSim = Simulation::createThreatSim(simParams, params);
 
 	/* initialize adaptation manager */
 	DartAdaptationManager adaptMgr;
-	adaptMgr.initialize(adaptParams,
+	adaptMgr.initialize(params,
 			unique_ptr<pladapt::UtilityFunction>(
 					new DartUtilityFunction(pThreatSim, pTargetSensor,
-							adaptParams.adaptationManager.finalReward)));
+							params.adaptationManager.finalReward)));
 
 	if (simParams.optimalityTest && !adaptMgr.supportsStrategy()) {
 		throw std::invalid_argument("selected adaptation manager does not support full strategies");
