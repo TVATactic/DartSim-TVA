@@ -69,6 +69,13 @@ bool PRISMWrapper::runPrism(const char* modelPath, const char* adversaryPath, co
 	pid_t pid = fork();
 	if (pid == 0) {
 
+		char cwd[PATH_MAX];
+		if (getcwd(cwd, sizeof(cwd)) != NULL) {
+			cout<<"Current working dir: "<<cwd;
+		} else {
+			cout<<"getcwd() error";
+		}
+
 		// create args vector
 		std::vector<const char*> argv = { PRISM, modelPath, "-pctl", pctl,
 				"-exportadv", adversaryPath, "-exportstates", statesPath,
@@ -383,12 +390,7 @@ std::vector<std::string> PRISMWrapper::plan(const std::string& environmentModel,
 		cout<<"adversaryPath: "<<adversaryPath<<endl<<endl;
 		cout<<" statesPath: "<<statesPath<<endl<<endl;
 
-		char cwd[PATH_MAX];
-		if (getcwd(cwd, sizeof(cwd)) != NULL) {
-			cout<<"Current working dir: "<<cwd;
-		} else {
-			cout<<"getcwd() error";
-		}
+		
 
         if (generateModel(environmentModel, initialState, modelPath)) {
 			cout<<"generateModel"<<endl;
