@@ -356,23 +356,23 @@ int main(int argc, char** argv) {
 	while(i<1){
 
 		// instantiate adaptation manager
-		shared_ptr<TargetSensor> pTargetSensor = Simulation::createTargetSensor(simParams,
-				adaptParams);
-		shared_ptr<Threat> pThreatSim = Simulation::createThreatSim(simParams, adaptParams);
+		// shared_ptr<TargetSensor> pTargetSensor = Simulation::createTargetSensor(simParams,
+		// 		adaptParams);
+		// shared_ptr<Threat> pThreatSim = Simulation::createThreatSim(simParams, adaptParams);
 
-		/* initialize adaptation manager */
-		DartAdaptationManager adaptMgr;
-		adaptMgr.initialize(adaptParams,
-				unique_ptr<pladapt::UtilityFunction>(
-						new DartUtilityFunction(pThreatSim, pTargetSensor,
-								adaptParams.adaptationManager.finalReward)));
+		// /* initialize adaptation manager */
+		// DartAdaptationManager adaptMgr;
+		// adaptMgr.initialize(adaptParams,
+		// 		unique_ptr<pladapt::UtilityFunction>(
+		// 				new DartUtilityFunction(pThreatSim, pTargetSensor,
+		// 						adaptParams.adaptationManager.finalReward)));
 
-		if (simParams.optimalityTest && !adaptMgr.supportsStrategy()) {
-			throw std::invalid_argument("selected adaptation manager does not support full strategies");
-		}
+		// if (simParams.optimalityTest && !adaptMgr.supportsStrategy()) {
+		// 	throw std::invalid_argument("selected adaptation manager does not support full strategies");
+		// }
 
 		auto results = Simulation::run(simParams, adaptParams, threatEnv, targetEnv,
-				route, adaptMgr);
+				route, adaptParams);
 
 		const std::string RESULTS_PREFIX = "out:";
 		cout << RESULTS_PREFIX << "destroyed=" << results.destroyed << endl;

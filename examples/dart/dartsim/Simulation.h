@@ -54,9 +54,12 @@ struct SimulationResults {
 
 class Simulation {
 public:
+	// static SimulationResults run(const SimulationParams& simParams, const Params& adaptParams,
+	// 		const RealEnvironment& threatEnv, const RealEnvironment& targetEnv,
+	// 		const Route& route, DartAdaptationManager& adaptMgr);
 	static SimulationResults run(const SimulationParams& simParams, const Params& adaptParams,
 			const RealEnvironment& threatEnv, const RealEnvironment& targetEnv,
-			const Route& route, DartAdaptationManager& adaptMgr);
+			const Route& route, Params& adaptParams);
 
 	static std::shared_ptr<Threat> createThreatSim(const SimulationParams& simParams,
 			const Params& adaptParams);

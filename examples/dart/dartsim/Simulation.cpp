@@ -151,10 +151,36 @@ double getRandomNum(vector<double>randNumbers) {
 	return randNumbers[3];
 }
 
-SimulationResults Simulation::run(const SimulationParams& simParams, const Params& params,
+// SimulationResults Simulation::run(const SimulationParams& simParams, const Params& params,
+// 		const RealEnvironment& threatEnv, const RealEnvironment& targetEnv,
+// 		const Route& route, DartAdaptationManager& adaptMgr) {
+
+	SimulationResults Simulation::run(const SimulationParams& simParams, const Params& params,
 		const RealEnvironment& threatEnv, const RealEnvironment& targetEnv,
-		const Route& route, DartAdaptationManager& adaptMgr) {
+		const Route& route, Params& adaptParams) {
+
 	SimulationResults results;
+
+	// adaption manager moved here
+
+	// instantiate adaptation manager
+	shared_ptr<TargetSensor> pTargetSensor = Simulation::createTargetSensor(simParams,
+			adaptParams);
+	shared_ptr<Threat> pThreatSim = Simulation::createThreatSim(simParams, adaptParams);
+
+	/* initialize adaptation manager */
+	DartAdaptationManager adaptMgr;
+	adaptMgr.initialize(adaptParams,
+			unique_ptr<pladapt::UtilityFunction>(
+					new DartUtilityFunction(pThreatSim, pTargetSensor,
+							adaptParams.adaptationManager.finalReward)));
+
+	if (simParams.optimalityTest && !adaptMgr.supportsStrategy()) {
+		throw std::invalid_argument("selected adaptation manager does not support full strategies");
+	}
+
+
+	//
 
 	//random nums file
 	ifstream File;
