@@ -66,15 +66,16 @@ void PRISMWrapper::setPrismOptions(const std::vector<std::string>& options) {
 bool PRISMWrapper::runPrism(const char* modelPath, const char* adversaryPath, const char* statesPath,
 		const char* labelsPath, const char* pctl) {
 	// TODO need to throw exceptions to provide better error handling
+	char cwd[PATH_MAX];
+	if (getcwd(cwd, sizeof(cwd)) != NULL) {
+		cout<<"Current working dir: "<<cwd;
+	} else {
+		cout<<"getcwd() error";
+	}
 	pid_t pid = fork();
 	if (pid == 0) {
 
-		char cwd[PATH_MAX];
-		if (getcwd(cwd, sizeof(cwd)) != NULL) {
-			cout<<"Current working dir: "<<cwd;
-		} else {
-			cout<<"getcwd() error";
-		}
+		
 
 		// create args vector
 		std::vector<const char*> argv = { PRISM, modelPath, "-pctl", pctl,
