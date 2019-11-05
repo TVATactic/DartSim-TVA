@@ -197,20 +197,20 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 	shared_ptr<Threat> pThreatSim = createThreatSim(simParams, params);
 
 
-	// instantiate adaptation manager
-	Params adaptParams = Params(params);
-	adaptParams.tactics.changeAltitudeLatency = getRandomNum(randNumbers);
-	DartAdaptationManager adaptMgr;
-	adaptMgr.initialize(adaptParams,
-			unique_ptr<pladapt::UtilityFunction>(
-					new DartUtilityFunction(pThreatSim, pTargetSensor,
-							adaptParams.adaptationManager.finalReward)));
+	// // instantiate adaptation manager
+	// Params adaptParams = Params(params);
+	// adaptParams.tactics.changeAltitudeLatency = getRandomNum(randNumbers);
+	// DartAdaptationManager adaptMgr;
+	// adaptMgr.initialize(adaptParams,
+	// 		unique_ptr<pladapt::UtilityFunction>(
+	// 				new DartUtilityFunction(pThreatSim, pTargetSensor,
+	// 						adaptParams.adaptationManager.finalReward)));
 
-	if (simParams.optimalityTest && !adaptMgr.supportsStrategy()) {
-		throw std::invalid_argument("selected adaptation manager does not support full strategies");
-	}
+	// if (simParams.optimalityTest && !adaptMgr.supportsStrategy()) {
+	// 	throw std::invalid_argument("selected adaptation manager does not support full strategies");
+	// }
 
-	/* initialize adaptation manager */
+	// /* initialize adaptation manager */
 
 
 	/* create forward-looking sensors */
@@ -272,6 +272,34 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 		 * because this is a discrete time simulation, but in a normal
 		 * case, the team configuration would be already continuous
 		 */
+
+
+
+
+		/////////////////////////////////
+		/////////////////////////////////
+		/////////////////////////////////
+		/////////////////////////////////
+		// instantiate adaptation manager
+		Params adaptParams = Params(params);
+		adaptParams.tactics.changeAltitudeLatency = getRandomNum(randNumbers);
+		DartAdaptationManager adaptMgr;
+		adaptMgr.initialize(adaptParams,
+				unique_ptr<pladapt::UtilityFunction>(
+						new DartUtilityFunction(pThreatSim, pTargetSensor,
+								adaptParams.adaptationManager.finalReward)));
+
+		if (simParams.optimalityTest && !adaptMgr.supportsStrategy()) {
+			throw std::invalid_argument("selected adaptation manager does not support full strategies");
+		}
+
+		/* initialize adaptation manager */
+		/////////////////////////////////
+		/////////////////////////////////
+		/////////////////////////////////
+		/////////////////////////////////
+		/////////////////////////////////
+
 		DartMonitoringInfo monitoringInfo;
 		monitoringInfo.position = position;
 		monitoringInfo.altitude = params.configurationSpace.maxAltitude * currentConfig.getAltitudeLevel() / (params.configurationSpace.ALTITUDE_LEVELS - 1);
