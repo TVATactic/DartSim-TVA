@@ -163,21 +163,8 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 
 	// adaption manager moved here
 
-	// instantiate adaptation manager
-	shared_ptr<TargetSensor> pTargetSensor = Simulation::createTargetSensor(simParams,
-			params);
-	shared_ptr<Threat> pThreatSim = Simulation::createThreatSim(simParams, params);
-
-	/* initialize adaptation manager */
-	DartAdaptationManager adaptMgr;
-	adaptMgr.initialize(params,
-			unique_ptr<pladapt::UtilityFunction>(
-					new DartUtilityFunction(pThreatSim, pTargetSensor,
-							params.adaptationManager.finalReward)));
-
-	if (simParams.optimalityTest && !adaptMgr.supportsStrategy()) {
-		throw std::invalid_argument("selected adaptation manager does not support full strategies");
-	}
+	
+	
 
 
 	//
@@ -209,6 +196,21 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 	shared_ptr<TargetSensor> pTargetSensor = createTargetSensor(simParams,
 			params);
 	shared_ptr<Threat> pThreatSim = createThreatSim(simParams, params);
+
+
+	// instantiate adaptation manager
+	DartAdaptationManager adaptMgr;
+	adaptMgr.initialize(params,
+			unique_ptr<pladapt::UtilityFunction>(
+					new DartUtilityFunction(pThreatSim, pTargetSensor,
+							params.adaptationManager.finalReward)));
+
+	if (simParams.optimalityTest && !adaptMgr.supportsStrategy()) {
+		throw std::invalid_argument("selected adaptation manager does not support full strategies");
+	}
+
+	/* initialize adaptation manager */
+
 
 	/* create forward-looking sensors */
 	EnvironmentMonitor envThreatMonitor(
