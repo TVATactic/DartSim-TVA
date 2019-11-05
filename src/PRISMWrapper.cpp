@@ -382,6 +382,14 @@ std::vector<std::string> PRISMWrapper::plan(const std::string& environmentModel,
 		cout<<modelPath<<endl<<endl;
 		cout<<"adversaryPath: "<<adversaryPath<<endl<<endl;
 		cout<<" statesPath: "<<statesPath<<endl<<endl;
+
+		char cwd[PATH_MAX];
+		if (getcwd(cwd, sizeof(cwd)) != NULL) {
+			cout<<"Current working dir: "<<cwd;
+		} else {
+			cout<<"getcwd() error";
+		}
+
         if (generateModel(environmentModel, initialState, modelPath)) {
 			cout<<"generateModel"<<endl;
             if (runPrism(modelPath, adversaryPath, statesPath, labelsPath,
