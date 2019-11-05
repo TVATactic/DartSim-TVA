@@ -157,7 +157,7 @@ double getRandomNum(vector<double>randNumbers) {
 
 	SimulationResults Simulation::run(const SimulationParams& simParams, const Params& params,
 		const RealEnvironment& threatEnv, const RealEnvironment& targetEnv,
-		const Route& route, Params& adaptParams) {
+		const Route& route) {
 
 	SimulationResults results;
 

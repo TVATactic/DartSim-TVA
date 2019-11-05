@@ -59,7 +59,7 @@ public:
 	// 		const Route& route, DartAdaptationManager& adaptMgr);
 	static SimulationResults run(const SimulationParams& simParams, const Params& adaptParams,
 			const RealEnvironment& threatEnv, const RealEnvironment& targetEnv,
-			const Route& route, Params& adaptParams);
+			const Route& route);
 
 	static std::shared_ptr<Threat> createThreatSim(const SimulationParams& simParams,
 			const Params& adaptParams);

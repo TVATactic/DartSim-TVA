@@ -372,7 +372,7 @@ int main(int argc, char** argv) {
 		// }
 
 		auto results = Simulation::run(simParams, adaptParams, threatEnv, targetEnv,
-				route, adaptParams);
+				route);
 
 		const std::string RESULTS_PREFIX = "out:";
 		cout << RESULTS_PREFIX << "destroyed=" << results.destroyed << endl;
