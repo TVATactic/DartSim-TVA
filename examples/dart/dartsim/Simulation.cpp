@@ -100,7 +100,9 @@ DartConfiguration executeTactic(string tactic, const DartConfiguration& config,
 	// double randomVal = (double)rand()/(RAND_MAX + 1)+(rand()%4);
 	
 	// randomVal = randomVal<0? randomVal*-1.0 : randomVal;
-	changeAltitudePeriods = randomVal;
+	// changeAltitudePeriods = randomVal;
+	changeAltitudePeriods = pladapt::tacticLatencyToPeriods(randomVal,
+					adaptMgrParams.adaptationPeriod);
 
 	auto newConfig = config;
 	cout << "executing tactic " << tactic << endl;
@@ -148,7 +150,7 @@ DartConfiguration executeTactic(string tactic, const DartConfiguration& config,
 
 double getRandomNum(vector<double>randNumbers) {
 	int randomIndex = rand() % randNumbers.size();
-	return randNumbers[3];
+	return randNumbers[randomIndex];
 }
 
 // SimulationResults Simulation::run(const SimulationParams& simParams, const Params& params,
@@ -161,13 +163,7 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 
 	SimulationResults results;
 
-	// adaption manager moved here
 
-	
-	
-
-
-	//
 
 	//random nums file
 	ifstream File;
@@ -189,6 +185,9 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 	 *  the complete strategy along the route. It then uses that strategy for
 	 *  the whole simulation.
 	 */
+
+
+
 	std::shared_ptr<Strategy> strategy;
 	Strategy::iterator strategyIterator;
 	bool gotStrategy = false;
@@ -199,11 +198,13 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 
 
 	// instantiate adaptation manager
+	Params adaptParams = Params(params);
+	adaptParams.tactics.changeAltitudeLatency = getRandomNum(randNumbers);
 	DartAdaptationManager adaptMgr;
-	adaptMgr.initialize(params,
+	adaptMgr.initialize(adaptParams,
 			unique_ptr<pladapt::UtilityFunction>(
 					new DartUtilityFunction(pThreatSim, pTargetSensor,
-							params.adaptationManager.finalReward)));
+							adaptParams.adaptationManager.finalReward)));
 
 	if (simParams.optimalityTest && !adaptMgr.supportsStrategy()) {
 		throw std::invalid_argument("selected adaptation manager does not support full strategies");
