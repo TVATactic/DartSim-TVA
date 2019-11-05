@@ -381,6 +381,7 @@ std::vector<std::string> PRISMWrapper::plan(const std::string& environmentModel,
 			cout<<"generateModel"<<endl;
             if (runPrism(modelPath, adversaryPath, statesPath, labelsPath,
             		pctl.c_str())) {
+				cout<<"running prism"<<endl;
             	if (boost::filesystem::exists(adversaryPath)) {
 					set<int> states = getNowStates(statesPath);
 					actions = getActions(adversaryPath, labelsPath, states);
