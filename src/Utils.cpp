@@ -25,7 +25,7 @@ namespace pladapt {
 
 unsigned tacticLatencyToPeriods(double tacticLatency, double evaluationPeriod) {
     // return ceil(tacticLatency / evaluationPeriod);
-    return (tacticLatency / evaluationPeriod);
+    return tacticLatency / evaluationPeriod;
 
 }
 
