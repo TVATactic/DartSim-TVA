@@ -91,9 +91,9 @@ shared_ptr<TargetSensor> Simulation::createTargetSensor(const SimulationParams& 
 
 DartConfiguration executeTactic(string tactic, const DartConfiguration& config,
 		const TacticsParams& tacticsParams, const AdaptationManagerParams& adaptMgrParams, double randomVal) {
-	// double changeAltitudePeriods =
-	// 		pladapt::tacticLatencyToPeriods(tacticsParams.changeAltitudeLatency,
-	// 				adaptMgrParams.adaptationPeriod);
+	auto changeAltitudePeriods =
+			pladapt::tacticLatencyToPeriods(tacticsParams.changeAltitudeLatency,
+					adaptMgrParams.adaptationPeriod);
 
 	
 	
@@ -101,10 +101,10 @@ DartConfiguration executeTactic(string tactic, const DartConfiguration& config,
 	
 	// randomVal = randomVal<0? randomVal*-1.0 : randomVal;
 	// changeAltitudePeriods = randomVal;
-	// changeAltitudePeriods = pladapt::tacticLatencyToPeriods(randomVal,
-	// 				adaptMgrParams.adaptationPeriod);
+	changeAltitudePeriods = pladapt::tacticLatencyToPeriods(randomVal,
+					adaptMgrParams.adaptationPeriod);
 
-	double changeAltitudePeriods =  randomVal;///adaptMgrParams.adaptationPeriod;
+	// double changeAltitudePeriods =  randomVal;///adaptMgrParams.adaptationPeriod;
 
 	cout<<"adaption period: "<<adaptMgrParams.adaptationPeriod<<endl;
 
