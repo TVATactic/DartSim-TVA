@@ -132,7 +132,7 @@ endmodule
 // TACTIC: IncAlt
 //************************************************************************
 
-const int IncAlt_LATENCY_PERIODS = ceil(IncAlt_LATENCY/PERIOD);
+const int IncAlt_LATENCY_PERIODS = (IncAlt_LATENCY/PERIOD);
 
 // Applicability conditions
 formula IncAlt_applicable = IncAlt_compatible & a < MAX_ALT_LEVEL;
@@ -164,7 +164,7 @@ endmodule
 // TACTIC: DecAlt
 //************************************************************************
 
-const int DecAlt_LATENCY_PERIODS = ceil(DecAlt_LATENCY/PERIOD);
+const int DecAlt_LATENCY_PERIODS = (DecAlt_LATENCY/PERIOD);
 
 // Applicability conditions
 formula DecAlt_applicable = DecAlt_compatible & a > 0;
