@@ -104,10 +104,15 @@ DartConfiguration executeTactic(string tactic, const DartConfiguration& config,
 	// changeAltitudePeriods = pladapt::tacticLatencyToPeriods(randomVal,
 	// 				adaptMgrParams.adaptationPeriod);
 
-	double changeAltitudePeriods =  randomVal/adaptMgrParams.adaptationPeriod;
+	double changeAltitudePeriods =  randomVal;///adaptMgrParams.adaptationPeriod;
+
 	cout<<"adaption period: "<<adaptMgrParams.adaptationPeriod<<endl;
+
 	cout<<"randomVal: "<<randomVal<<endl;
-	cout<<endl<<"latency now "<< changeAltitudePeriods<<endl<<endl;
+
+	cout<<"latency now "<< changeAltitudePeriods<<endl<<endl;
+
+
 	auto newConfig = config;
 	cout << "executing tactic " << tactic << endl;
 
