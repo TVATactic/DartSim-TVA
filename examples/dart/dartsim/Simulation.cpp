@@ -202,9 +202,9 @@ vector<vector<double>> read_record(string filename)
         while ( getline(s, word, delim) ) { 
             // add all the column data 
             // of a row to a vector 
-			string temp = word.c_str();
+			double temp = atof(word.c_str());
 			cout<<temp;
-            // row.push_back(atof(temp)); 
+            row.push_back(temp); 
         } 
 
 
@@ -226,7 +226,7 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 	SimulationResults results;
 
 
-	read_record("randonum2.txt");
+	read_record("randonum.csv");
 	//random nums file
 	ifstream File;
     File.open("randonum.txt");
