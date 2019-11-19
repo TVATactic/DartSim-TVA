@@ -196,15 +196,17 @@ vector<vector<double>> read_record(string filename)
   
         // used for breaking words 
         istringstream s(line); 
-		char delim = ', ';
+		char delim = ',';
         // read every column data of a row and 
         // store it in a string variable, 'word' 
         while ( getline(s, word, delim) ) { 
             // add all the column data 
             // of a row to a vector 
-			
-            row.push_back(atof(word.c_str())); 
+			string temp = word.c_str();
+			cout<<temp;
+            // row.push_back(atof(temp)); 
         } 
+
 
 		latencies.push_back(row);
   
@@ -224,7 +226,7 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 	SimulationResults results;
 
 
-
+	read_record("randonum.csv");
 	//random nums file
 	ifstream File;
     File.open("randonum.txt");
