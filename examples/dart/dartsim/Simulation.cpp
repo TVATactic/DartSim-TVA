@@ -195,11 +195,11 @@ vector<vector<double>> read_record(string filename)
         getline(fin, line); 
   
         // used for breaking words 
-        stringstream s(line); 
-  
+        istringstream s(line); 
+		char delim = ', ';
         // read every column data of a row and 
         // store it in a string variable, 'word' 
-        while (getline(s, word, ', ')) { 
+        while ( getline(s, word, delim) ) { 
             // add all the column data 
             // of a row to a vector 
 			
