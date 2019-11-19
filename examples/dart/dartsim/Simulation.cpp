@@ -226,7 +226,7 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 	SimulationResults results;
 
 
-	read_record("randonum.csv");
+	read_record("randonum2.txt");
 	//random nums file
 	ifstream File;
     File.open("randonum.txt");
