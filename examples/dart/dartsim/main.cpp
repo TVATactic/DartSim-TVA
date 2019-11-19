@@ -348,12 +348,12 @@ int main(int argc, char** argv) {
 
 	int i=0;
 	ofstream resultsFile;
-	resultsFile.open ("resultsMod.csv", std::ofstream::out | std::ofstream::app);
+	resultsFile.open ("resultsRunningAvg.csv", std::ofstream::out | std::ofstream::app);
 	resultsFile<<"targetsDetected, destroyed, whereDestroyed.x, missionSuccess, decisionTimeAvg, "
 	  			"decisionTimeVar"<<endl;
 
 
-	while(i<1){
+	while(i<1000){
 
 		// instantiate adaptation manager
 		// shared_ptr<TargetSensor> pTargetSensor = Simulation::createTargetSensor(simParams,
