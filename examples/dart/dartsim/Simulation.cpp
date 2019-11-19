@@ -37,7 +37,12 @@
 #include <boost/accumulators/statistics/stats.hpp>
 #include <boost/accumulators/statistics/mean.hpp>
 #include <boost/accumulators/statistics/moment.hpp>
+
+
 #include <fstream>
+#include <istream> 
+#include <string> 
+
 
 using namespace std;
 using namespace pladapt;
@@ -166,6 +171,52 @@ double getRandomNum(vector<double>randNumbers) {
 // 		const RealEnvironment& threatEnv, const RealEnvironment& targetEnv,
 // 		const Route& route, DartAdaptationManager& adaptMgr) {
 
+vector<vector<double>> read_record(string filename) 
+{ 
+  
+    // File pointer 
+    fstream fin; 
+  
+    // Open an existing file 
+    fin.open(filename, ios::in); 
+
+  
+    // Read the Data from the file 
+    // as String Vector 
+    vector<double> row; 
+    string line, word, temp; 
+	vector<vector<double>> latencies; 
+    while (fin >> temp) { 
+  
+        row.clear(); 
+  
+        // read an entire row and 
+        // store it in a string variable 'line' 
+        getline(fin, line); 
+  
+        // used for breaking words 
+        stringstream s(line); 
+  
+        // read every column data of a row and 
+        // store it in a string variable, 'word' 
+        while (getline(s, word, ', ')) { 
+            // add all the column data 
+            // of a row to a vector 
+			
+            row.push_back(atof(word.c_str())); 
+        } 
+
+		latencies.push_back(row);
+  
+        // convert string to integer for comparision 
+  
+        // Compare the roll number 
+        
+    } 
+	return latencies;
+
+} 
+
 SimulationResults Simulation::run(const SimulationParams& simParams, const Params& params,
 	const RealEnvironment& threatEnv, const RealEnvironment& targetEnv,
 	const Route& route) {
@@ -185,6 +236,11 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 	
 	cout<<endl;
 	cout<<getRandomNum(randNumbers)<<endl;
+
+	
+
+
+
 
 	// random nums file
 	
