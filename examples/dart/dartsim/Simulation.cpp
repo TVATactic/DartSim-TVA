@@ -227,7 +227,7 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 	SimulationResults results;
 
 
-	vector<vector<double>> latencies= read_record("oneFile.txt");
+	vector<vector<double>> latencies= read_record("randomnum2.txt");
 	
 	for (int i = 0; i < latencies.size(); i++) {
 		cout<<latencies[i][0]<<endl;
