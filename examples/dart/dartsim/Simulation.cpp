@@ -228,6 +228,12 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 
 	vector<vector<double>> latencies= read_record("randomPerfect.csv");
 	
+	for (int i = 0; i < latencies.size(); i++) {
+		cout<<latencies[i][0]<<endl;
+		cout<<latencies[i][1]<<endl<<endl;
+		
+	}
+
 	//random nums file
 	// ifstream File;
     // File.open("randonum.txt");
