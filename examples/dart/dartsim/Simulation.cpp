@@ -202,7 +202,7 @@ vector<vector<double>> read_record(string filename)
         while ( getline(s, word, delim) ) { 
             // add all the column data 
             // of a row to a vector 
-			double temp = atof(word.c_str());
+			double temp = stod(word.c_str());
 			cout<<temp;
             row.push_back(temp); 
         } 
