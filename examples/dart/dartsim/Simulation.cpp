@@ -162,7 +162,7 @@ DartConfiguration executeTactic(string tactic, const DartConfiguration& config,
 	return newConfig;
 }
 
-double getRandomNum(vector<double>randNumbers) {
+vector<double> getRandomNumbers(vector <vector<double>>randNumbers) {
 	int randomIndex = rand() % randNumbers.size();
 	return randNumbers[randomIndex];
 }
@@ -226,18 +226,19 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 	SimulationResults results;
 
 
-	read_record("randonum2.txt");
-	//random nums file
-	ifstream File;
-    File.open("randonum.txt");
-	std::vector<double>randNumbers;
-	double number;
-	while(File >> number)
-		// cout<<number<<endl;
-    	randNumbers.push_back(number);
+	vector<vector<double>> latencies= read_record("randonum.csv");
 	
-	cout<<endl;
-	cout<<getRandomNum(randNumbers)<<endl;
+	//random nums file
+	// ifstream File;
+    // File.open("randonum.txt");
+	// std::vector<double>randNumbers;
+	// double number;
+	// while(File >> number)
+	// 	// cout<<number<<endl;
+    // 	randNumbers.push_back(number);
+	
+	// cout<<endl;
+	// cout<<getRandomNum(randNumbers)<<endl;
 
 	
 
@@ -340,8 +341,9 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 		 * case, the team configuration would be already continuous
 		 */
 
-
-
+		vector<double> randomLatencies = getRandomNumbers(latencies);
+		cout<<"expected: "<< randomLatencies[0]<<endl;
+		cout<<"real: "<< randomLatencies[1]<<endl;
 
 		/////////////////////////////////
 		/////////////////////////////////
@@ -349,7 +351,7 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 		/////////////////////////////////
 		// instantiate adaptation manager
 		Params adaptParams = Params(params);
-		adaptParams.tactics.changeAltitudeLatency = getRandomNum(randNumbers);
+		adaptParams.tactics.changeAltitudeLatency = randomLatencies[0];
 		DartAdaptationManager adaptMgr;
 		adaptMgr.initialize(adaptParams,
 				unique_ptr<pladapt::UtilityFunction>(
@@ -431,7 +433,7 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 		 * started, but we cannot wait until they complete.
 		 */
 		for (auto tactic : tactics) {
-			currentConfig = executeTactic(tactic, currentConfig, params.tactics, params.adaptationManager, getRandomNum(randNumbers));
+			currentConfig = executeTactic(tactic, currentConfig, params.tactics, params.adaptationManager, randomLatencies[1]);
 		}
 
 		/* update display */
