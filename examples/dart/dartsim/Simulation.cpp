@@ -226,7 +226,7 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 	SimulationResults results;
 
 
-	vector<vector<double>> latencies= read_record("randonum.csv");
+	vector<vector<double>> latencies= read_record("randomPerfect.csv");
 	
 	//random nums file
 	// ifstream File;
