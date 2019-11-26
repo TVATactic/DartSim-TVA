@@ -234,6 +234,7 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 		cout<<latencies[i][1]<<endl<<endl;
 		
 	}
+	int latencyIterator = -1;
 
 	//random nums file
 	// ifstream File;
@@ -348,7 +349,14 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 		 * case, the team configuration would be already continuous
 		 */
 
-		vector<double> randomLatencies = getRandomNumbers(latencies);
+		// latencyIterator = (latencyIterator +1 )%latencies.size();
+		if( latencyIterator < latencies.size()){
+			latencyIterator++;
+		}
+
+		// vector<double> randomLatencies = getRandomNumbers(latencies);
+		vector<double> randomLatencies = latencies[latencyIterator];
+
 		cout<<"expected: "<< randomLatencies[0]<<endl;
 		cout<<"real: "<< randomLatencies[1]<<endl;
 
