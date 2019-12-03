@@ -229,7 +229,7 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 
 	vector<vector<double>> latencies= read_record("randomAvg.txt");
 	
-	int latencyIterator = -1;
+	int latencyIterator = 0;
 
 	
 
