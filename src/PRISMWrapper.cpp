@@ -39,12 +39,13 @@
 #include <stdexcept>
 #include <boost/filesystem.hpp>
 #include <boost/scope_exit.hpp>
-
+#include <filesystem>
 using namespace std;
+
 
 namespace pladapt {
 
-const char* PRISM = "prism";
+const char* PRISM = "/home/aizazulhaq/Desktop/pladapt/prism";
 const char* TACTIC_SUFFIX = "_start";
 
 PRISMWrapper::PRISMWrapper() {
@@ -79,23 +80,29 @@ bool PRISMWrapper::runPrism(const char* modelPath, const char* adversaryPath, co
 	if (pid == 0) {
 
 		
-
+		cout<<"check11"<<endl;
+		// cout<< "Current path is " <<filesystem.current_path()<<endl;
 		// create args vector
 		std::vector<const char*> argv = { PRISM, modelPath, "-pctl", pctl,
 				"-exportadv", adversaryPath, "-exportstates", statesPath,
 				"-exportlabels", labelsPath };
+		cout<<"check12"<<endl;
 		for (const auto& opt : prismOptions) {
 			argv.push_back(opt.c_str());
 		}
+		cout<<"check13"<<endl;
 		argv.push_back(nullptr);
-
+		cout<<"check14"<<endl;
 		// child
 		// TODO perhaps we need to pipe the output to get errorr descriptions
 		// see this url for example: http://www.cs.uleth.ca/~holzmann/C/system/pipeforkexec.html
+		cout<<PRISM<<endl;
 		int status = execvp(PRISM, (char* const*) argv.data());
+		cout<<"check15"<<endl;
 		if (status == -1) { // the only option really, otherwise execlp doesn't return
 		    throw runtime_error(string("runPrism() execlp: ") + strerror(errno));
 		}
+		cout<<"check16"<<endl;
 	} else if (pid == -1) {
 		throw runtime_error(string("runPrism() fork: ") + strerror(errno));
 	}
