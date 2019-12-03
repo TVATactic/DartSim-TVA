@@ -38,6 +38,12 @@
 #include <boost/accumulators/statistics/mean.hpp>
 #include <boost/accumulators/statistics/moment.hpp>
 
+
+#include <fstream>
+#include <istream> 
+#include <string> 
+
+
 using namespace std;
 using namespace pladapt;
 
@@ -89,13 +95,35 @@ shared_ptr<TargetSensor> Simulation::createTargetSensor(const SimulationParams& 
 }
 
 DartConfiguration executeTactic(string tactic, const DartConfiguration& config,
-		const TacticsParams& tacticsParams, const AdaptationManagerParams& adaptMgrParams) {
+		const TacticsParams& tacticsParams, const AdaptationManagerParams& adaptMgrParams, double randomVal) {
 	auto changeAltitudePeriods =
 			pladapt::tacticLatencyToPeriods(tacticsParams.changeAltitudeLatency,
 					adaptMgrParams.adaptationPeriod);
 
+	
+	
+	// double randomVal = (double)rand()/(RAND_MAX + 1)+(rand()%4);
+	
+	// randomVal = randomVal<0? randomVal*-1.0 : randomVal;
+	// changeAltitudePeriods = randomVal;
+	// changeAltitudePeriods = pladapt::tacticLatencyToPeriods(randomVal,
+	// 				adaptMgrParams.adaptationPeriod);
+
+	// double changeAltitudePeriods =  randomVal;///adaptMgrParams.adaptationPeriod;
+
+	cout<<"adaption period: "<<adaptMgrParams.adaptationPeriod<<endl;
+
+	cout<<"randomVal: "<<randomVal<<endl;
+
+	cout<<"latency now "<< changeAltitudePeriods<<endl<<endl;
+
+
 	auto newConfig = config;
 	cout << "executing tactic " << tactic << endl;
+
+	// cout<<"Cost now: "<< newConfig.getCostAttribute()<<" deducting"<<endl;
+	// newConfig.deductCostAttribute();
+
 	if (tactic == INC_ALTITUDE) {
 		if (changeAltitudePeriods > 0) {
 			newConfig.setTtcIncAlt(changeAltitudePeriods);
@@ -134,19 +162,93 @@ DartConfiguration executeTactic(string tactic, const DartConfiguration& config,
 	return newConfig;
 }
 
+vector<int> getRandomNumbers(vector <vector<int>>randNumbers) {
+	int randomIndex = rand() % randNumbers.size();
+	return randNumbers[randomIndex];
+}
 
+// SimulationResults Simulation::run(const SimulationParams& simParams, const Params& params,
+// 		const RealEnvironment& threatEnv, const RealEnvironment& targetEnv,
+// 		const Route& route, DartAdaptationManager& adaptMgr) {
+
+vector<vector<int>> read_record(string filename) 
+{ 
+  
+    // File pointer 
+    fstream fin; 
+  
+    // Open an existing file 
+    fin.open(filename, ios::in); 
+
+  
+    // Read the Data from the file 
+    // as String Vector 
+    vector<int> row; 
+    string line, word, temp; 
+	vector<vector<int>> latencies; 
+    while (fin >> temp) { 
+  
+        row.clear(); 
+  
+        // read an entire row and 
+        // store it in a string variable 'line' 
+        getline(fin, line); 
+  
+        // used for breaking words 
+        istringstream s(line); 
+		char delim = ',';
+        // read every column data of a row and 
+        // store it in a string variable, 'word' 
+        while ( getline(s, word, delim) ) { 
+            // add all the column data 
+            // of a row to a vector 
+			double temp = atof(word.c_str());
+			// cout<<word<<" "<<temp<<endl;
+			// cout<<temp;
+            row.push_back(temp); 
+        } 
+
+
+		latencies.push_back(row);
+  
+        // convert string to integer for comparision 
+  
+        // Compare the roll number 
+        
+    } 
+	return latencies;
+
+} 
 
 SimulationResults Simulation::run(const SimulationParams& simParams, const Params& params,
-		const RealEnvironment& threatEnv, const RealEnvironment& targetEnv,
-		const Route& route, DartAdaptationManager& adaptMgr) {
+	const RealEnvironment& threatEnv, const RealEnvironment& targetEnv,
+	const Route& route) {
+
 	SimulationResults results;
 
+
+	vector<vector<int>> latencies= read_record("randomPerfect.csv");
+	
+	int latencyIterator = 0;
+
+	
+
+	
+
+
+
+
+
+	
 	/*
 	 *  optimal testing stuff
 	 *  This makes a single adaptation decision for the whole route, computing
 	 *  the complete strategy along the route. It then uses that strategy for
 	 *  the whole simulation.
 	 */
+
+
+
 	std::shared_ptr<Strategy> strategy;
 	Strategy::iterator strategyIterator;
 	bool gotStrategy = false;
@@ -154,6 +256,23 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 	shared_ptr<TargetSensor> pTargetSensor = createTargetSensor(simParams,
 			params);
 	shared_ptr<Threat> pThreatSim = createThreatSim(simParams, params);
+
+
+	// // instantiate adaptation manager
+	// Params adaptParams = Params(params);
+	// adaptParams.tactics.changeAltitudeLatency = getRandomNum(randNumbers);
+	// DartAdaptationManager adaptMgr;
+	// adaptMgr.initialize(adaptParams,
+	// 		unique_ptr<pladapt::UtilityFunction>(
+	// 				new DartUtilityFunction(pThreatSim, pTargetSensor,
+	// 						adaptParams.adaptationManager.finalReward)));
+
+	// if (simParams.optimalityTest && !adaptMgr.supportsStrategy()) {
+	// 	throw std::invalid_argument("selected adaptation manager does not support full strategies");
+	// }
+
+	// /* initialize adaptation manager */
+
 
 	/* create forward-looking sensors */
 	EnvironmentMonitor envThreatMonitor(
@@ -214,6 +333,42 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 		 * because this is a discrete time simulation, but in a normal
 		 * case, the team configuration would be already continuous
 		 */
+
+		// latencyIterator = (latencyIterator +1 )%latencies.size();
+		if( latencyIterator < latencies.size()){
+			latencyIterator++;
+		}
+
+		// vector<double> randomLatencies = getRandomNumbers(latencies);
+		vector<int> randomLatencies = latencies[latencyIterator];
+
+		cout<<"expected: "<< randomLatencies[0]<<endl;
+		cout<<"real: "<< randomLatencies[1]<<endl;
+
+		/////////////////////////////////
+		/////////////////////////////////
+		/////////////////////////////////
+		/////////////////////////////////
+		// instantiate adaptation manager
+		Params adaptParams = Params(params);
+		adaptParams.tactics.changeAltitudeLatency = randomLatencies[0];
+		DartAdaptationManager adaptMgr;
+		adaptMgr.initialize(adaptParams,
+				unique_ptr<pladapt::UtilityFunction>(
+						new DartUtilityFunction(pThreatSim, pTargetSensor,
+								adaptParams.adaptationManager.finalReward)));
+
+		if (simParams.optimalityTest && !adaptMgr.supportsStrategy()) {
+			throw std::invalid_argument("selected adaptation manager does not support full strategies");
+		}
+
+		/* initialize adaptation manager */
+		/////////////////////////////////
+		/////////////////////////////////
+		/////////////////////////////////
+		/////////////////////////////////
+		/////////////////////////////////
+
 		DartMonitoringInfo monitoringInfo;
 		monitoringInfo.position = position;
 		monitoringInfo.altitude = params.configurationSpace.maxAltitude * currentConfig.getAltitudeLevel() / (params.configurationSpace.ALTITUDE_LEVELS - 1);
@@ -278,7 +433,7 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 		 * started, but we cannot wait until they complete.
 		 */
 		for (auto tactic : tactics) {
-			currentConfig = executeTactic(tactic, currentConfig, params.tactics, params.adaptationManager);
+			currentConfig = executeTactic(tactic, currentConfig, params.tactics, params.adaptationManager, randomLatencies[1]);
 		}
 
 		/* update display */
