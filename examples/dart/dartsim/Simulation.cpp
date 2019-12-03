@@ -227,7 +227,7 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 	SimulationResults results;
 
 
-	vector<vector<double>> latencies= read_record("randomAvg.txt");
+	vector<vector<double>> latencies= read_record("randomPerfect.csv");
 	
 	int latencyIterator = 0;
 

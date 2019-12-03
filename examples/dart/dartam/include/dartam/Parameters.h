@@ -72,7 +72,7 @@ struct AdaptationManagerParams {
 	 * Any time unit can be used as long as it is consistent in all the time
 	 * parameters (this one and tactic latencies).
 	 */
-	double adaptationPeriod = 1;
+	int adaptationPeriod = 60;
 	unsigned HORIZON = 5;
 	bool nonLatencyAware = false;
 	DartDTMCEnvironment::DistributionApproximation distributionApproximation = DartDTMCEnvironment::DistributionApproximation::E_PT;

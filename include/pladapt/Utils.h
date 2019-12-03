@@ -29,7 +29,7 @@ namespace pladapt {
  * This is to make the conversion uniform and easy to change globally,
  * for example switching from ceil to round.
  */
-double tacticLatencyToPeriods(double tacticLatency, double evaluationPeriod);
+int tacticLatencyToPeriods(int tacticLatency, int evaluationPeriod);
 
 } /* namespace pladapt */
 
