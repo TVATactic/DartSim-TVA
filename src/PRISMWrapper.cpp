@@ -72,6 +72,7 @@ bool PRISMWrapper::runPrism(const char* modelPath, const char* adversaryPath, co
 	} else {
 		cout<<"getcwd() error";
 	}
+	cout<<"forking"<<endl
 	pid_t pid = fork();
 	if (pid == 0) {
 
