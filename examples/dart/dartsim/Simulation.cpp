@@ -234,7 +234,7 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 		cout<<latencies[i][1]<<endl<<endl;
 		
 	}
-	int latencyIterator = -1;
+	int latencyIterator = 0;
 
 	//random nums file
 	// ifstream File;
