@@ -183,7 +183,7 @@ vector<vector<int>> read_record(string filename)
   
     // Read the Data from the file 
     // as String Vector 
-    vector<int16_t> row; 
+    vector<int> row; 
     string line, word, temp; 
 	vector<vector<int>> latencies; 
     while (fin >> temp) { 
