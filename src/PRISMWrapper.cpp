@@ -66,14 +66,12 @@ void PRISMWrapper::setPrismOptions(const std::vector<std::string>& options) {
 bool PRISMWrapper::runPrism(const char* modelPath, const char* adversaryPath, const char* statesPath,
 		const char* labelsPath, const char* pctl) {
 	// TODO need to throw exceptions to provide better error handling
-	cout<<"check1"<<endl;
 	char cwd[PATH_MAX];
 	if (getcwd(cwd, sizeof(cwd)) != NULL) {
 		cout<<"Current working dir: "<<cwd;
 	} else {
 		cout<<"getcwd() error";
 	}
-
 	pid_t pid = fork();
 	if (pid == 0) {
 
@@ -390,9 +388,9 @@ std::vector<std::string> PRISMWrapper::plan(const std::string& environmentModel,
          */
 		cout<<"planning2"<<endl;
 		cout<<modelPath<<endl<<endl;
-		cout<<"adversaryPath: "<<adversaryPath<<endl;
+		cout<<"adversaryPath: "<<adversaryPath<<endl<<endl;
 		cout<<" statesPath: "<<statesPath<<endl<<endl;
-		cout<<"labelsPath: "<<labelsPath<<endl;
+
 		
 
         if (generateModel(environmentModel, initialState, modelPath)) {
