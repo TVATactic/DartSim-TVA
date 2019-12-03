@@ -103,7 +103,7 @@ struct TacticsParams {
 	 *
 	 * Use the same unit as for AdaptationManagerParams.adaptationPeriod
 	 */
-	unsigned changeAltitudeLatency = 1;
+	unsigned changeAltitudeLatency = 60;
 };
 
 struct Params {

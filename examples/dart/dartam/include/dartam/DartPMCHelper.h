@@ -38,7 +38,7 @@ public:
 
 protected:
     double evaluationPeriod;
-    double changeAltitudeLatency;
+    int changeAltitudeLatency;
     int maxAltitudeLevel;
     double destructionFormationFactor;
     double threatRange;
