@@ -203,7 +203,7 @@ vector<vector<double>> read_record(string filename)
             // add all the column data 
             // of a row to a vector 
 			double temp = atof(word.c_str());
-			cout<<word<<" "<<temp<<endl;
+			// cout<<word<<" "<<temp<<endl;
 			// cout<<temp;
             row.push_back(temp); 
         } 
@@ -229,31 +229,16 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 
 	vector<vector<double>> latencies= read_record("randomAvg.txt");
 	
-	for (int i = 0; i < latencies.size(); i++) {
-		cout<<latencies[i][0]<<endl;
-		cout<<latencies[i][1]<<endl<<endl;
-		
-	}
 	int latencyIterator = -1;
 
-	//random nums file
-	// ifstream File;
-    // File.open("randonum.txt");
-	// std::vector<double>randNumbers;
-	// double number;
-	// while(File >> number)
-	// 	// cout<<number<<endl;
-    // 	randNumbers.push_back(number);
 	
-	// cout<<endl;
-	// cout<<getRandomNum(randNumbers)<<endl;
 
 	
 
 
 
 
-	// random nums file
+
 	
 	/*
 	 *  optimal testing stuff
