@@ -162,7 +162,7 @@ DartConfiguration executeTactic(string tactic, const DartConfiguration& config,
 	return newConfig;
 }
 
-vector<double> getRandomNumbers(vector <vector<double>>randNumbers) {
+vector<int> getRandomNumbers(vector <vector<int>>randNumbers) {
 	int randomIndex = rand() % randNumbers.size();
 	return randNumbers[randomIndex];
 }
@@ -171,7 +171,7 @@ vector<double> getRandomNumbers(vector <vector<double>>randNumbers) {
 // 		const RealEnvironment& threatEnv, const RealEnvironment& targetEnv,
 // 		const Route& route, DartAdaptationManager& adaptMgr) {
 
-vector<vector<double>> read_record(string filename) 
+vector<vector<int>> read_record(string filename) 
 { 
   
     // File pointer 
@@ -183,9 +183,9 @@ vector<vector<double>> read_record(string filename)
   
     // Read the Data from the file 
     // as String Vector 
-    vector<double> row; 
+    vector<int16_t> row; 
     string line, word, temp; 
-	vector<vector<double>> latencies; 
+	vector<vector<int>> latencies; 
     while (fin >> temp) { 
   
         row.clear(); 
@@ -227,7 +227,7 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 	SimulationResults results;
 
 
-	vector<vector<double>> latencies= read_record("randomPerfect.csv");
+	vector<vector<int>> latencies= read_record("randomPerfect.csv");
 	
 	int latencyIterator = 0;
 
@@ -340,7 +340,7 @@ SimulationResults Simulation::run(const SimulationParams& simParams, const Param
 		}
 
 		// vector<double> randomLatencies = getRandomNumbers(latencies);
-		vector<double> randomLatencies = latencies[latencyIterator];
+		vector<int> randomLatencies = latencies[latencyIterator];
 
 		cout<<"expected: "<< randomLatencies[0]<<endl;
 		cout<<"real: "<< randomLatencies[1]<<endl;
