@@ -12,7 +12,7 @@ def calculateUtil(latency, cost, reward = 100):
     if latency > 0 or cost > 0 and latency+cost != 0:
         return (reward**5)/(latency+cost)
     else:
-        return 0
+        return -1
 
 # this funciton picks up the latency and the cost columns from a csv file
 def readUtilityIntoArray(fileName):
