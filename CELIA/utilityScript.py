@@ -7,10 +7,10 @@ import pandas as pd
 
 
 # utility = (reward^5)/ (latency+cost)
-def calculateUtil(latency, cost, reward = 100):
+def calculateUtil(latency, cost, reward = 100, reliability = 1):
     
     if latency > 0 or cost > 0 and latency+cost != 0:
-        return (reward**5)/(latency+cost)
+        return ((reward)/(latency+cost)) * reliability 
     else:
         return -1
 
@@ -21,9 +21,15 @@ def readUtilityIntoArray(fileName):
     file = pd.read_csv(fileName)
     latencies = file['Latency']
     costs = file['Cost']
+    # in case the file doesn't have reliability vals, it defaults to a list of 0
+    try:
+        reliabilityVals = file['Reliablity']
+    except:
+        reliabilityVals = [1] * len(costs)
+
     data = []
     for i in range(len(latencies)):
-         data.append(calculateUtil(latencies[i], costs[i]))
+         data.append(calculateUtil(latencies[i], costs[i], reliabilityVals[i]))
         
         
     return data
